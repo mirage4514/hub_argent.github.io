@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Patrimoine · Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F7F5F2;
+  --bg2:#FFFFFF;
+  --bg3:#F0EDE8;
+  --border:#E8E4DE;
+  --border2:#D5CFC6;
+  --text:#1A1916;
+  --sub:#6B6760;
+  --dim:#A8A49E;
+  --green:#2A7D52;
+  --green-bg:#EBF4EF;
+  --green-border:#B8D9C8;
+  --accent:#C96442;
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.05);
+  --shadow2:0 2px 8px rgba(0,0,0,.08),0 12px 40px rgba(0,0,0,.08);
+}
+html,body{height:100%;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:40px 24px;
+}
+
+/* ── LOGO ── */
+.brand{
+  text-align:center;
+  margin-bottom:52px;
+}
+.brand h1{
+  font-family:'Crimson Pro',serif;
+  font-weight:300;
+  font-size:clamp(2.2rem,5vw,3rem);
+  letter-spacing:-.03em;
+  line-height:1.05;
+  color:var(--text);
+}
+.brand h1 em{font-style:italic;color:var(--accent);}
+.brand p{
+  margin-top:8px;
+  font-size:.8rem;
+  font-weight:300;
+  color:var(--dim);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+
+/* ── SOLDE RELIÉ ── */
+.linked-balance{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  background:var(--bg2);
+  border:1px solid var(--green-border);
+  border-radius:100px;
+  padding:8px 18px;
+  margin-bottom:48px;
+  box-shadow:var(--shadow);
+}
+.lb-dot{
+  width:8px;height:8px;
+  border-radius:50%;
+  background:var(--green);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(42,125,82,.4);}
+  50%{box-shadow:0 0 0 5px rgba(42,125,82,0);}
+}
+.lb-text{font-size:.8rem;color:var(--sub);font-weight:400;}
+.lb-amount{
+  font-family:'Crimson Pro',serif;
+  font-size:1rem;
+  font-weight:600;
+  color:var(--green);
+  margin-left:4px;
+}
+
+/* ── CARDS ── */
+.cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  width:100%;
+  max-width:760px;
+}
+
+.app-card{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:32px 30px;
+  cursor:pointer;
+  box-shadow:var(--shadow);
+  transition:all .22s ease;
+  text-align:left;
+  position:relative;
+  overflow:hidden;
+  text-decoration:none;
+  color:inherit;
+  display:block;
+}
+.app-card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,transparent 60%,var(--bg3));
+  opacity:0;
+  transition:opacity .22s;
+}
+.app-card:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--shadow2);
+  border-color:var(--border2);
+}
+.app-card:hover::before{opacity:1;}
+
+.card-icon{
+  width:48px;height:48px;
+  border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;
+  margin-bottom:20px;
+  position:relative;z-index:1;
+}
+.app-card.finances .card-icon{background:var(--green-bg);}
+.app-card.invest   .card-icon{background:#EBF0F8;}
+
+.card-label{
+  font-size:.65rem;
+  font-weight:500;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--dim);
+  margin-bottom:4px;
+  position:relative;z-index:1;
+}
+.card-title{
+  font-family:'Crimson Pro',serif;
+  font-weight:400;
+  font-size:1.35rem;
+  letter-spacing:-.02em;
+  color:var(--text);
+  margin-bottom:10px;
+  position:relative;z-index:1;
+}
+.card-desc{
+  font-size:.8rem;
+  font-weight:300;
+  color:var(--sub);
+  line-height:1.6;
+  position:relative;z-index:1;
+}
+
+.card-arrow{
+  position:absolute;
+  bottom:26px;right:26px;
+  width:32px;height:32px;
+  border-radius:50%;
+  background:var(--bg3);
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.app-card:hover .card-arrow{
+  background:var(--text);
+  border-color:var(--text);
+  transform:translate(2px,-2px);
+}
+.app-card:hover .card-arrow svg{stroke:#fff;}
+
+/* ── FOOTER ── */
+footer{
+  margin-top:48px;
+  font-size:.72rem;
+  color:var(--dim);
+  text-align:center;
+  font-weight:300;
+}
+
+@media(max-width:560px){
+  .cards{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="brand">
+  <h1>Patrimoine <em>·</em> Hub</h1>
+  <p>Tes applications financières personnelles</p>
+</div>
+
+<!-- Solde partagé entre les deux apps -->
+<div class="linked-balance">
+  <div class="lb-dot"></div>
+  <span class="lb-text">Solde disponible pour investir :</span>
+  <span class="lb-amount" id="sharedBalance">calcul…</span>
+</div>
+
+<div class="cards">
+  <a class="app-card finances" href="finances.html">
+    <div class="card-icon">📊</div>
+    <div class="card-label">Application 1</div>
+    <div class="card-title">Gestion de finances</div>
+    <div class="card-desc">Suivi de tes revenus et dépenses, graphiques et bilan mensuel.</div>
+    <div class="card-arrow">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6B6760" stroke-width="2.5">
+        <line x1="5" y1="19" x2="19" y2="5"/><polyline points="9 5 19 5 19 15"/>
+      </svg>
+    </div>
+  </a>
+
+  <a class="app-card invest" href="invest.html">
+    <div class="card-icon">📈</div>
+    <div class="card-label">Application 2</div>
+    <div class="card-title">Conseiller Investissement</div>
+    <div class="card-desc">Trouve des opportunités crypto, actions et ETF selon ton profil et budget.</div>
+    <div class="card-arrow">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6B6760" stroke-width="2.5">
+        <line x1="5" y1="19" x2="19" y2="5"/><polyline points="9 5 19 5 19 15"/>
+      </svg>
+    </div>
+  </a>
+</div>
+
+<footer>Données stockées localement · aucune connexion externe requise pour les finances</footer>
+
+<script>
+// Lire le solde depuis le localStorage de l'app finances
+function getBalance() {
+  try {
+    const txs = JSON.parse(localStorage.getItem('flux_v3')) || [];
+    const inc = txs.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+    const exp = txs.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+    return inc - exp;
+  } catch { return 0; }
+}
+const bal = getBalance();
+const el  = document.getElementById('sharedBalance');
+el.textContent = bal.toLocaleString('fr-FR',{style:'currency',currency:'EUR'});
+el.style.color = bal >= 0 ? 'var(--green)' : '#9B3030';
+</script>
+</body>
+</html>

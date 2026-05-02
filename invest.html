@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Patrimoine · Investissement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F7F5F2; --bg2:#FFFFFF; --bg3:#F0EDE8; --bg4:#FAF8F5;
+  --border:#E8E4DE; --border2:#D5CFC6;
+  --text:#1A1916; --sub:#6B6760; --dim:#A8A49E;
+  --green:#2A7D52; --green-bg:#EBF4EF; --green-b:#B8D9C8;
+  --red:#9B3030;   --red-bg:#F5EDEC;   --red-b:#D9B8B8;
+  --gold:#8A6A2A;  --gold-bg:#F5F0E5;  --gold-b:#D9C898;
+  --blue:#2A5A8A;  --blue-bg:#EBF0F8;  --blue-b:#B8CDE0;
+  --purple:#6A3A8A;--purple-bg:#F3EEF8;--purple-b:#C8B0D8;
+  --accent:#C96442;
+  --sh:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.05);
+  --sh2:0 2px 8px rgba(0,0,0,.08),0 12px 40px rgba(0,0,0,.07);
+  --r:10px; --r2:16px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14.5px;line-height:1.65}
+.wrap{max-width:1160px;margin:0 auto;padding:36px 26px 80px}
+
+/* NAV */
+nav{display:flex;align-items:center;gap:16px;margin-bottom:36px;padding-bottom:24px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.nav-back{display:inline-flex;align-items:center;gap:7px;font-size:.78rem;color:var(--sub);text-decoration:none;padding:7px 14px;border:1px solid var(--border);border-radius:100px;transition:all .18s;font-weight:400;flex-shrink:0}
+.nav-back:hover{color:var(--text);border-color:var(--border2)}
+.nav-brand{font-family:'Crimson Pro',serif;font-weight:300;font-size:1.35rem;letter-spacing:-.02em}
+.nav-brand em{font-style:italic;color:var(--accent)}
+.budget-pill{margin-left:auto;display:inline-flex;align-items:center;gap:8px;background:var(--green-bg);border:1px solid var(--green-b);border-radius:100px;padding:7px 16px;font-size:.78rem;color:var(--green);font-weight:500}
+.bp-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(42,125,82,.4)}50%{box-shadow:0 0 0 5px rgba(42,125,82,0)}}
+.bp-val{font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600}
+
+/* CONFIGURATEUR */
+.config-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px}
+
+.config-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:22px 24px;box-shadow:var(--sh)}
+.config-card h3{font-family:'Crimson Pro',serif;font-weight:300;font-size:1rem;letter-spacing:-.01em;margin-bottom:14px}
+.config-card h3 .sup{font-family:'DM Sans',sans-serif;font-size:.63rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:2px}
+
+/* Sliders risque */
+.risk-options{display:flex;flex-direction:column;gap:7px}
+.risk-btn{display:flex;align-items:center;gap:10px;padding:9px 13px;border:1.5px solid var(--border);border-radius:var(--r);cursor:pointer;transition:all .18s;background:none;text-align:left;width:100%;font-family:'DM Sans',sans-serif;font-size:.8rem;color:var(--sub);font-weight:400}
+.risk-btn:hover{border-color:var(--border2);color:var(--text)}
+.risk-btn .ri{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+.risk-btn .rl{flex:1}
+.risk-btn .rl b{display:block;font-weight:500;font-size:.8rem;color:var(--text)}
+.risk-btn .rl small{font-size:.69rem;color:var(--dim)}
+.risk-btn.on-safe{border-color:var(--green);background:var(--green-bg);color:var(--green)}
+.risk-btn.on-safe .rl b{color:var(--green)}
+.risk-btn.on-mod{border-color:var(--gold);background:var(--gold-bg);color:var(--gold)}
+.risk-btn.on-mod .rl b{color:var(--gold)}
+.risk-btn.on-risky{border-color:var(--red);background:var(--red-bg);color:var(--red)}
+.risk-btn.on-risky .rl b{color:var(--red)}
+.risk-btn.on-max{border-color:var(--purple);background:var(--purple-bg);color:var(--purple)}
+.risk-btn.on-max .rl b{color:var(--purple)}
+
+/* Durée */
+.dur-options{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.dur-btn{padding:8px 10px;border:1.5px solid var(--border);border-radius:var(--r);cursor:pointer;background:none;font-family:'DM Sans',sans-serif;font-size:.76rem;font-weight:500;color:var(--sub);transition:all .18s;text-align:center}
+.dur-btn:hover{border-color:var(--border2);color:var(--text)}
+.dur-btn.on{border-color:var(--blue);background:var(--blue-bg);color:var(--blue)}
+
+/* Classes */
+.class-options{display:flex;flex-direction:column;gap:6px}
+.class-btn{display:flex;align-items:center;gap:9px;padding:8px 12px;border:1.5px solid var(--border);border-radius:var(--r);cursor:pointer;background:none;font-family:'DM Sans',sans-serif;font-size:.78rem;color:var(--sub);transition:all .18s;text-align:left;width:100%}
+.class-btn:hover{border-color:var(--border2);color:var(--text)}
+.class-btn.on{border-color:var(--text);background:var(--bg3);color:var(--text)}
+.class-btn .ck{width:14px;height:14px;border-radius:3px;border:1.5px solid var(--border);transition:all .16s;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.class-btn.on .ck{background:var(--text);border-color:var(--text)}
+.class-btn.on .ck::after{content:'✓';font-size:.55rem;color:#fff;font-weight:700}
+
+/* Budget */
+.budget-config{display:flex;flex-direction:column;gap:10px}
+.bud-row{display:flex;align-items:center;gap:10px}
+.bud-label{font-size:.75rem;color:var(--sub);flex:1}
+.bud-input{background:var(--bg3);border:1.5px solid var(--border);border-radius:var(--r);padding:8px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;outline:none;transition:border-color .18s;width:130px;text-align:right}
+.bud-input:focus{border-color:var(--text);background:var(--bg2)}
+.bud-note{font-size:.7rem;color:var(--dim);line-height:1.5}
+.bud-use-balance{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;color:var(--green);cursor:pointer;padding:5px 11px;border:1px solid var(--green-b);border-radius:100px;background:var(--green-bg);transition:all .18s;font-weight:500}
+.bud-use-balance:hover{background:var(--green);color:#fff}
+
+/* BOUTON CHERCHER */
+.search-bar{display:flex;justify-content:center;margin-bottom:30px}
+.btn-search{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--text);color:var(--bg);
+  border:none;border-radius:100px;
+  padding:13px 36px;
+  font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;
+  cursor:pointer;transition:all .2s;
+  box-shadow:var(--sh2);
+  letter-spacing:.02em;
+}
+.btn-search:hover{background:#2d2b28;transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.18)}
+.btn-search:active{transform:translateY(0)}
+.btn-search .spin{display:none;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.btn-search.loading .spin{display:block}
+.btn-search.loading .search-icon{display:none}
+
+/* RÉSULTATS */
+.results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.results-title{font-family:'Crimson Pro',serif;font-weight:300;font-size:1.2rem;letter-spacing:-.01em}
+.results-count{font-size:.72rem;color:var(--dim);background:var(--bg3);border:1px solid var(--border);padding:3px 10px;border-radius:100px}
+
+.results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px}
+
+.res-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);
+  padding:20px 22px;box-shadow:var(--sh);
+  transition:all .22s;
+  display:flex;flex-direction:column;gap:12px;
+  animation:fadeUp .25s ease both;
+}
+.res-card:hover{box-shadow:var(--sh2);transform:translateY(-2px);border-color:var(--border2)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.rc-top{display:flex;align-items:flex-start;gap:12px}
+.rc-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.rc-head{flex:1;min-width:0}
+.rc-name{font-weight:500;font-size:.92rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rc-ticker{font-size:.7rem;color:var(--dim);margin-top:1px}
+
+.rc-badges{display:flex;flex-wrap:wrap;gap:5px}
+.badge{font-size:.65rem;font-weight:500;padding:3px 9px;border-radius:100px;letter-spacing:.03em}
+.badge.risk-safe{background:var(--green-bg);color:var(--green);border:1px solid var(--green-b)}
+.badge.risk-mod{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-b)}
+.badge.risk-risky{background:var(--red-bg);color:var(--red);border:1px solid var(--red-b)}
+.badge.risk-max{background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-b)}
+.badge.type{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-b)}
+.badge.dur{background:var(--bg3);color:var(--sub);border:1px solid var(--border)}
+
+.rc-desc{font-size:.78rem;color:var(--sub);line-height:1.55}
+
+.rc-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rc-stat{background:var(--bg3);border-radius:8px;padding:8px 10px}
+.rc-stat-label{font-size:.63rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);margin-bottom:2px}
+.rc-stat-val{font-family:'Crimson Pro',serif;font-size:.98rem;font-weight:400}
+.rc-stat-val.up{color:var(--green)} .rc-stat-val.down{color:var(--red)} .rc-stat-val.neu{color:var(--text)}
+
+.rc-actions{display:flex;gap:8px}
+.btn-site{
+  flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:9px 14px;border-radius:var(--r);
+  font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:500;
+  cursor:pointer;transition:all .18s;text-decoration:none;
+  border:1.5px solid var(--border2);background:none;color:var(--sub);
+}
+.btn-site:hover{background:var(--bg3);color:var(--text);border-color:var(--border2)}
+.btn-site.primary{background:var(--text);color:var(--bg);border-color:var(--text)}
+.btn-site.primary:hover{background:#2d2b28}
+
+/* EMPTY / HINT */
+.hint{
+  text-align:center;padding:52px 20px;
+  color:var(--dim);
+}
+.hint-icon{font-size:2.8rem;margin-bottom:14px;opacity:.4}
+.hint h3{font-family:'Crimson Pro',serif;font-weight:300;font-size:1.2rem;color:var(--sub);margin-bottom:6px}
+.hint p{font-size:.8rem;line-height:1.6;max-width:420px;margin:0 auto}
+
+/* DISCLAIMER */
+.disclaimer{
+  margin-top:32px;padding:14px 18px;
+  background:var(--gold-bg);border:1px solid var(--gold-b);
+  border-radius:var(--r);font-size:.74rem;color:var(--gold);line-height:1.55;
+}
+
+/* TOAST */
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--text);color:var(--bg);padding:9px 20px;border-radius:100px;font-size:.78rem;font-weight:500;opacity:0;transition:opacity .22s,transform .22s;pointer-events:none;white-space:nowrap;z-index:999;box-shadow:var(--sh2)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media(max-width:900px){.config-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.config-grid{grid-template-columns:1fr}.wrap{padding:20px 14px 60px}.results-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- NAV -->
+<nav>
+  <a class="nav-back" href="hub.html">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+    Hub
+  </a>
+  <div class="nav-brand">Patrimoine <em>·</em> Investissement</div>
+  <div class="budget-pill" id="budgetPill">
+    <div class="bp-dot"></div>
+    Solde disponible :
+    <span class="bp-val" id="availBal">—</span>
+  </div>
+</nav>
+
+<!-- CONFIGURATEUR -->
+<div class="config-grid">
+
+  <!-- RISQUE -->
+  <div class="config-card">
+    <h3><span class="sup">Étape 1</span>Profil de risque</h3>
+    <div class="risk-options">
+      <button class="risk-btn" data-r="safe" onclick="setRisk('safe')">
+        <div class="ri" style="background:var(--green-bg)">🛡️</div>
+        <div class="rl"><b>Prudent</b><small>Capital protégé, rendements stables</small></div>
+      </button>
+      <button class="risk-btn" data-r="mod" onclick="setRisk('mod')">
+        <div class="ri" style="background:var(--gold-bg)">⚖️</div>
+        <div class="rl"><b>Modéré</b><small>Équilibre rendement / sécurité</small></div>
+      </button>
+      <button class="risk-btn on-risky" data-r="risky" onclick="setRisk('risky')">
+        <div class="ri" style="background:var(--red-bg)">🚀</div>
+        <div class="rl"><b>Dynamique</b><small>Croissance forte, volatilité acceptée</small></div>
+      </button>
+      <button class="risk-btn" data-r="max" onclick="setRisk('max')">
+        <div class="ri" style="background:var(--purple-bg)">⚡</div>
+        <div class="rl"><b>Spéculatif</b><small>Gains max, perte totale possible</small></div>
+      </button>
+    </div>
+  </div>
+
+  <!-- DURÉE + CLASSES -->
+  <div class="config-card">
+    <h3><span class="sup">Étape 2</span>Horizon & classes</h3>
+    <div style="margin-bottom:14px">
+      <div style="font-size:.68rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);margin-bottom:7px">Horizon d'investissement</div>
+      <div class="dur-options">
+        <button class="dur-btn" data-d="court" onclick="setDur('court')">Court terme<br><small style="color:var(--dim)">< 1 an</small></button>
+        <button class="dur-btn on" data-d="moyen" onclick="setDur('moyen')">Moyen terme<br><small style="color:var(--dim)">1 — 5 ans</small></button>
+        <button class="dur-btn" data-d="long" onclick="setDur('long')">Long terme<br><small style="color:var(--dim)">5 — 15 ans</small></button>
+        <button class="dur-btn" data-d="tlong" onclick="setDur('tlong')">Très long<br><small style="color:var(--dim)">> 15 ans</small></button>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:.68rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);margin-bottom:7px">Classes d'actifs</div>
+      <div class="class-options">
+        <button class="class-btn on" data-cl="crypto" onclick="toggleClass('crypto')"><div class="ck"></div>₿ Crypto-monnaies</button>
+        <button class="class-btn on" data-cl="actions" onclick="toggleClass('actions')"><div class="ck"></div>📊 Actions (S&P 500, CAC40…)</button>
+        <button class="class-btn on" data-cl="etf" onclick="toggleClass('etf')"><div class="ck"></div>📦 ETF / Fonds indiciels</button>
+        <button class="class-btn" data-cl="matieres" onclick="toggleClass('matieres')"><div class="ck"></div>🥇 Matières premières</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUDGET -->
+  <div class="config-card">
+    <h3><span class="sup">Étape 3</span>Budget à investir</h3>
+    <div class="budget-config">
+      <div class="bud-row">
+        <span class="bud-label">Montant souhaité</span>
+        <input class="bud-input" type="number" id="budgetInput" placeholder="500" min="1" step="1"/>
+      </div>
+      <button class="bud-use-balance" onclick="useBalance()">
+        ↩ Utiliser mon solde disponible
+      </button>
+      <div class="bud-note" id="budNote">Entre le montant que tu souhaites allouer à cet investissement. Tu peux utiliser tout ou partie de ton solde disponible.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- BOUTON -->
+<div class="search-bar">
+  <button class="btn-search" id="btnSearch" onclick="search()">
+    <span class="search-icon">🔍</span>
+    <div class="spin"></div>
+    Trouver mes investissements
+  </button>
+</div>
+
+<!-- RÉSULTATS -->
+<div id="resultsZone">
+  <div class="hint">
+    <div class="hint-icon">📈</div>
+    <h3>Configure ton profil, puis lance la recherche</h3>
+    <p>L'outil sélectionnera des opportunités adaptées à ton niveau de risque, ton horizon et ton budget — avec des liens directs vers les vraies plateformes.</p>
+  </div>
+</div>
+
+<div class="disclaimer">
+  ⚠️ <strong>Avertissement :</strong> Ces suggestions sont générées automatiquement à titre informatif uniquement. Elles ne constituent pas un conseil financier. Investir comporte des risques, y compris la perte totale du capital. Consulte un conseiller financier agréé avant tout investissement.
+</div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══ ÉTAT ══ */
+let selRisk    = 'risky';
+let selDur     = 'moyen';
+let selClasses = new Set(['crypto','actions','etf']);
+let budget     = 0;
+
+/* ══ INIT ══ */
+const $=id=>document.getElementById(id);
+const eur=n=>n.toLocaleString('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0});
+
+// Lire le solde depuis l'app finances
+function getBalance(){
+  try{
+    const txs=JSON.parse(localStorage.getItem('flux_v3'))||[];
+    const inc=txs.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+    const exp=txs.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+    return Math.max(0, inc-exp);
+  }catch{return 0;}
+}
+
+const bal=getBalance();
+$('availBal').textContent=bal>0?eur(bal):'0 €';
+$('budNote').textContent=bal>0
+  ? `Ton solde actuel dans l'app finances est de ${eur(bal)}. Tu peux tout ou partie l'allouer ici.`
+  : 'Aucun solde dans l\'app finances. Entre manuellement le montant à investir.';
+
+/* ══ CONTRÔLES ══ */
+function setRisk(r){
+  selRisk=r;
+  document.querySelectorAll('.risk-btn').forEach(b=>{
+    b.className='risk-btn'+(b.dataset.r===r?' on-'+r:'');
+  });
+}
+
+function setDur(d){
+  selDur=d;
+  document.querySelectorAll('.dur-btn').forEach(b=>{
+    b.className='dur-btn'+(b.dataset.d===d?' on':'');
+  });
+}
+
+function toggleClass(c){
+  if(selClasses.has(c)) selClasses.delete(c);
+  else selClasses.add(c);
+  document.querySelectorAll('.class-btn').forEach(b=>{
+    if(b.dataset.cl===c) b.className='class-btn'+(selClasses.has(c)?' on':'');
+  });
+}
+
+function useBalance(){
+  if(bal<=0){toast('Aucun solde disponible dans l\'app finances.');return;}
+  $('budgetInput').value=Math.floor(bal);
+  toast(`Budget réglé sur ${eur(bal)}`);
+}
+
+function toast(msg){
+  const el=$('toast');el.textContent=msg;el.classList.add('show');
+  clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2800);
+}
+
+/* ══ BASE DE DONNÉES D'INVESTISSEMENTS ══ */
+const DB = [
+  /* ── CRYPTO ── */
+  {id:'btc',   class:'crypto',  risk:['risky','max'],    dur:['court','moyen','long','tlong'],
+   name:'Bitcoin',        ticker:'BTC/EUR',       icon:'₿',  iconBg:'#FFF4E0',
+   desc:'La crypto-monnaie la plus capitalisée et la plus liquide au monde. Référence du marché, souvent appelée "or numérique".',
+   perf1y:'+62%',  vol:'Élevée',  minBudget:10,
+   sites:[{label:'Coinbase',url:'https://www.coinbase.com/fr/price/bitcoin'},{label:'Binance',url:'https://www.binance.com/fr/trade/BTC_USDT'},{label:'Crypto.com',url:'https://crypto.com/fr/price/bitcoin'}]},
+
+  {id:'eth',   class:'crypto',  risk:['risky','max'],    dur:['court','moyen','long'],
+   name:'Ethereum',       ticker:'ETH/EUR',        icon:'Ξ',  iconBg:'#F0F0FF',
+   desc:'Plateforme de smart contracts leader. Essentielle à la DeFi et aux NFTs. Forte adoption institutionnelle.',
+   perf1y:'+48%',  vol:'Élevée',  minBudget:10,
+   sites:[{label:'Coinbase',url:'https://www.coinbase.com/fr/price/ethereum'},{label:'Binance',url:'https://www.binance.com/fr/trade/ETH_USDT'},{label:'Kraken',url:'https://www.kraken.com/prices/ethereum'}]},
+
+  {id:'sol',   class:'crypto',  risk:['risky','max'],    dur:['court','moyen'],
+   name:'Solana',         ticker:'SOL/EUR',        icon:'◎',  iconBg:'#F0FFF8',
+   desc:'Blockchain haute performance avec des frais très bas. Ecosystème DeFi et NFT en pleine expansion.',
+   perf1y:'+85%',  vol:'Très élevée',  minBudget:10,
+   sites:[{label:'Binance',url:'https://www.binance.com/fr/trade/SOL_USDT'},{label:'Coinbase',url:'https://www.coinbase.com/fr/price/solana'},{label:'Kraken',url:'https://www.kraken.com/prices/solana'}]},
+
+  {id:'bnb',   class:'crypto',  risk:['risky','max'],    dur:['court','moyen'],
+   name:'BNB',            ticker:'BNB/EUR',        icon:'🔶', iconBg:'#FFFBE0',
+   desc:'Token natif de Binance. Utile pour les frais et la DeFi sur BNB Chain. Forte liquidité.',
+   perf1y:'+38%',  vol:'Élevée',  minBudget:10,
+   sites:[{label:'Binance',url:'https://www.binance.com/fr/trade/BNB_USDT'},{label:'Crypto.com',url:'https://crypto.com/fr/price/bnb'}]},
+
+  {id:'xrp',   class:'crypto',  risk:['mod','risky'],    dur:['moyen','long'],
+   name:'XRP / Ripple',   ticker:'XRP/EUR',        icon:'✕',  iconBg:'#F0F5FF',
+   desc:'Protocole de paiement international rapide. Adoption bancaire croissante après clarification réglementaire.',
+   perf1y:'+210%', vol:'Élevée',  minBudget:10,
+   sites:[{label:'Binance',url:'https://www.binance.com/fr/trade/XRP_USDT'},{label:'Coinbase',url:'https://www.coinbase.com/fr/price/xrp'}]},
+
+  {id:'usdc',  class:'crypto',  risk:['safe','mod'],     dur:['court','moyen'],
+   name:'USDC (stablecoin)',ticker:'USDC/USD',      icon:'💲', iconBg:'#EBF4EF',
+   desc:'Stablecoin adossé au dollar américain. Idéal pour générer des intérêts en DeFi sans exposition aux fluctuations.',
+   perf1y:'~4-8%', vol:'Nulle',  minBudget:10,
+   sites:[{label:'Coinbase',url:'https://www.coinbase.com/fr/price/usd-coin'},{label:'Aave DeFi',url:'https://app.aave.com'},{label:'Curve Finance',url:'https://curve.fi'}]},
+
+  /* ── ACTIONS ── */
+  {id:'aapl',  class:'actions', risk:['safe','mod'],     dur:['long','tlong'],
+   name:'Apple Inc.',     ticker:'AAPL (NASDAQ)', icon:'🍎',  iconBg:'#F5F5F5',
+   desc:'Leader mondial en technologies grand public. Revenus récurrents via services (iCloud, App Store). Dividendes et rachats d\'actions.',
+   perf1y:'+18%',  vol:'Faible',  minBudget:150,
+   sites:[{label:'Trade Republic',url:'https://traderepublic.com/fr-fr'},{label:'Degiro',url:'https://www.degiro.fr'},{label:'eToro',url:'https://www.etoro.com/fr/markets/aapl'}]},
+
+  {id:'nvda',  class:'actions', risk:['risky','max'],    dur:['moyen','long'],
+   name:'NVIDIA',         ticker:'NVDA (NASDAQ)', icon:'🟢',  iconBg:'#EBF8EE',
+   desc:'Leader des GPU et de l\'IA. Bénéficie directement de l\'explosion de l\'intelligence artificielle. Croissance exponentielle.',
+   perf1y:'+118%', vol:'Élevée',  minBudget:100,
+   sites:[{label:'Trade Republic',url:'https://traderepublic.com/fr-fr'},{label:'Degiro',url:'https://www.degiro.fr'},{label:'eToro',url:'https://www.etoro.com/fr/markets/nvda'}]},
+
+  {id:'msft',  class:'actions', risk:['safe','mod'],     dur:['long','tlong'],
+   name:'Microsoft',      ticker:'MSFT (NASDAQ)', icon:'🪟',  iconBg:'#EBF0F8',
+   desc:'Géant logiciel avec Azure (cloud N°2 mondial), Copilot IA, et Xbox. Dividendes stables et croissance soutenue.',
+   perf1y:'+14%',  vol:'Faible',  minBudget:300,
+   sites:[{label:'Trade Republic',url:'https://traderepublic.com/fr-fr'},{label:'Degiro',url:'https://www.degiro.fr'},{label:'Boursorama',url:'https://www.boursorama.com/bourse/actions/cours/1rPMSFT/'}]},
+
+  {id:'tsla',  class:'actions', risk:['risky','max'],    dur:['moyen','long'],
+   name:'Tesla Inc.',     ticker:'TSLA (NASDAQ)', icon:'⚡',  iconBg:'#FFF0E0',
+   desc:'Leader des véhicules électriques avec une expansion dans l\'énergie et l\'IA. Très volatile, fort potentiel.',
+   perf1y:'-15%',  vol:'Très élevée',  minBudget:150,
+   sites:[{label:'Trade Republic',url:'https://traderepublic.com/fr-fr'},{label:'eToro',url:'https://www.etoro.com/fr/markets/tsla'},{label:'Degiro',url:'https://www.degiro.fr'}]},
+
+  {id:'lvmh',  class:'actions', risk:['safe','mod'],     dur:['long','tlong'],
+   name:'LVMH',           ticker:'MC (Euronext)', icon:'💎',  iconBg:'#F8F0F8',
+   desc:'N°1 mondial du luxe (Louis Vuitton, Dior, Moët…). Marques premium avec pricing power exceptionnel.',
+   perf1y:'-8%',   vol:'Modérée',  minBudget:500,
+   sites:[{label:'Trade Republic',url:'https://traderepublic.com/fr-fr'},{label:'Boursorama',url:'https://www.boursorama.com/bourse/actions/cours/1rPMC/'},{label:'Degiro',url:'https://www.degiro.fr'}]},
+
+  /* ── ETF ── */
+  {id:'sp500', class:'etf',     risk:['safe','mod'],     dur:['long','tlong'],
+   name:'ETF S&P 500',    ticker:'CSPX / CL2',   icon:'📊',  iconBg:'#EBF4EF',
+   desc:'Réplique les 500 plus grandes entreprises américaines. Rendement historique moyen de ~10%/an. Le pilier de tout portefeuille long terme.',
+   perf1y:'+24%',  vol:'Modérée',  minBudget:1,
+   sites:[{label:'Trade Republic',url:'https://traderepublic.com/fr-fr'},{label:'Degiro',url:'https://www.degiro.fr'},{label:'Lynx Broker',url:'https://lynxbroker.fr'}]},
+
+  {id:'world', class:'etf',     risk:['safe','mod'],     dur:['long','tlong'],
+   name:'ETF MSCI World',  ticker:'IWDA / MWRD',  icon:'🌍',  iconBg:'#EBF0F8',
+   desc:'Exposition à 1500+ grandes entreprises dans 23 pays développés. Diversification géographique maximale.',
+   perf1y:'+20%',  vol:'Modérée',  minBudget:1,
+   sites:[{label:'Trade Republic',url:'https://traderepublic.com/fr-fr'},{label:'Degiro',url:'https://www.degiro.fr'},{label:'Boursorama',url:'https://www.boursorama.com'}]},
+
+  {id:'nasdaq',class:'etf',     risk:['mod','risky'],    dur:['moyen','long'],
+   name:'ETF Nasdaq 100', ticker:'QQQ / NASD',   icon:'💻',  iconBg:'#F3EEF8',
+   desc:'Les 100 plus grandes valeurs technologiques du Nasdaq. Apple, Microsoft, Nvidia, Amazon… Forte croissance.',
+   perf1y:'+26%',  vol:'Élevée',  minBudget:1,
+   sites:[{label:'Trade Republic',url:'https://traderepublic.com/fr-fr'},{label:'Degiro',url:'https://www.degiro.fr'},{label:'Lynx Broker',url:'https://lynxbroker.fr'}]},
+
+  {id:'em',    class:'etf',     risk:['mod','risky'],    dur:['long','tlong'],
+   name:'ETF Marchés Émergents', ticker:'EEM / EIMI',icon:'🌏', iconBg:'#FFF4E0',
+   desc:'Chine, Inde, Brésil, Corée du Sud… Potentiel de croissance élevé sur 10-20 ans malgré une volatilité plus forte.',
+   perf1y:'+8%',   vol:'Élevée',  minBudget:1,
+   sites:[{label:'Trade Republic',url:'https://traderepublic.com/fr-fr'},{label:'Degiro',url:'https://www.degiro.fr'}]},
+
+  /* ── MATIÈRES PREMIÈRES ── */
+  {id:'gold',  class:'matieres',risk:['safe'],             dur:['long','tlong'],
+   name:'Or physique / ETC', ticker:'SGLN / GOLD', icon:'🥇',  iconBg:'#FFF8E0',
+   desc:'Valeur refuge par excellence. Protection contre l\'inflation et les crises géopolitiques. Peu corrélé aux actions.',
+   perf1y:'+28%',  vol:'Faible',  minBudget:10,
+   sites:[{label:'Degiro',url:'https://www.degiro.fr'},{label:'Bolero',url:'https://www.bolero.be'},{label:'XTB',url:'https://www.xtb.com/fr/marches/matierex-premieres/or'}]},
+
+  {id:'silver',class:'matieres',risk:['mod','risky'],      dur:['moyen','long'],
+   name:'Argent métal',   ticker:'XAGS / ISLN',  icon:'🥈',  iconBg:'#F5F5F5',
+   desc:'Double usage industriel et valeur refuge. Plus volatil que l\'or, mais potentiel de rattrapage intéressant.',
+   perf1y:'+10%',  vol:'Modérée',  minBudget:10,
+   sites:[{label:'Degiro',url:'https://www.degiro.fr'},{label:'XTB',url:'https://www.xtb.com/fr/marches/matierex-premieres/argent'},{label:'eToro',url:'https://www.etoro.com/fr/markets/silver'}]},
+];
+
+/* ══ MOTEUR DE RECHERCHE ══ */
+function search(){
+  const budgetVal = parseFloat($('budgetInput').value) || 0;
+  if(budgetVal <= 0){ toast('Entre un montant à investir.'); $('budgetInput').focus(); return; }
+  if(selClasses.size === 0){ toast('Sélectionne au moins une classe d\'actifs.'); return; }
+
+  budget = budgetVal;
+  const btn = $('btnSearch');
+  btn.classList.add('loading');
+  btn.disabled = true;
+
+  // Simulation délai "recherche"
+  setTimeout(() => {
+    btn.classList.remove('loading');
+    btn.disabled = false;
+    const results = computeResults(budgetVal);
+    displayResults(results, budgetVal);
+  }, 1400);
+}
+
+function computeResults(budgetVal){
+  return DB.filter(inv => {
+    const classOk  = selClasses.has(inv.class);
+    const riskOk   = inv.risk.includes(selRisk);
+    const durOk    = inv.dur.includes(selDur);
+    const budgetOk = budgetVal >= inv.minBudget;
+    return classOk && riskOk && durOk && budgetOk;
+  });
+}
+
+const RISK_LABELS = {safe:'Prudent',mod:'Modéré',risky:'Dynamique',max:'Spéculatif'};
+const DUR_LABELS  = {court:'Court terme',moyen:'Moyen terme',long:'Long terme',tlong:'Très long terme'};
+const CLASS_LABELS= {crypto:'Crypto',actions:'Action',etf:'ETF',matieres:'Matière 1ère'};
+
+function displayResults(results, budgetVal){
+  const zone = $('resultsZone');
+
+  if(!results.length){
+    zone.innerHTML=`<div class="hint"><div class="hint-icon">🔍</div><h3>Aucun résultat trouvé</h3><p>Essaie d'élargir tes critères : ajuste ton profil de risque, ton horizon ou les classes d'actifs sélectionnées.</p></div>`;
+    return;
+  }
+
+  const riskClass = {safe:'risk-safe',mod:'risk-mod',risky:'risk-risky',max:'risk-max'};
+  const perfColor = p => p.startsWith('+') ? 'up' : p.startsWith('-') ? 'down' : 'neu';
+
+  zone.innerHTML = `
+    <div class="results-header">
+      <div class="results-title">
+        ${results.length} opportunité${results.length>1?'s':''} trouvée${results.length>1?'s':''} pour ${budget.toLocaleString('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0})}
+      </div>
+      <div class="results-count">${RISK_LABELS[selRisk]} · ${DUR_LABELS[selDur]}</div>
+    </div>
+    <div class="results-grid">
+      ${results.map((inv,i) => `
+        <div class="res-card" style="animation-delay:${i*0.06}s">
+          <div class="rc-top">
+            <div class="rc-icon" style="background:${inv.iconBg}">${inv.icon}</div>
+            <div class="rc-head">
+              <div class="rc-name">${inv.name}</div>
+              <div class="rc-ticker">${inv.ticker}</div>
+            </div>
+          </div>
+          <div class="rc-badges">
+            <span class="badge ${riskClass[selRisk]}">${RISK_LABELS[selRisk]}</span>
+            <span class="badge type">${CLASS_LABELS[inv.class]}</span>
+            <span class="badge dur">${DUR_LABELS[selDur]}</span>
+          </div>
+          <div class="rc-desc">${inv.desc}</div>
+          <div class="rc-stats">
+            <div class="rc-stat">
+              <div class="rc-stat-label">Perf. 1 an</div>
+              <div class="rc-stat-val ${perfColor(inv.perf1y)}">${inv.perf1y}</div>
+            </div>
+            <div class="rc-stat">
+              <div class="rc-stat-label">Volatilité</div>
+              <div class="rc-stat-val neu">${inv.vol}</div>
+            </div>
+          </div>
+          <div class="rc-actions">
+            ${inv.sites.map((s,j) => `
+              <a href="${s.url}" target="_blank" rel="noopener noreferrer"
+                 class="btn-site${j===0?' primary':''}" onclick="trackClick('${inv.id}','${s.label}')">
+                ${j===0?'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="19" x2="19" y2="5"/><polyline points="9 5 19 5 19 15"/></svg>':''}
+                ${s.label}
+              </a>`).join('')}
+          </div>
+        </div>
+      `).join('')}
+    </div>`;
+}
+
+function trackClick(id, platform){
+  // Simple log (pas de tracking externe)
+  console.log(`[Flux] Ouverture ${id} sur ${platform}`);
+}
+</script>
+</body>
+</html>
